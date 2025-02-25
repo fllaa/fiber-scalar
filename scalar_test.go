@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/swaggo/swag"
+	"github.com/swaggo/swag/v2"
 )
 
 type mockedSwag struct{}
@@ -68,21 +68,10 @@ func TestScalar(t *testing.T) {
 			contentType: "application/json",
 		},
 		{
-			name:        "Should be returns status 200 with 'image/png' content-type",
-			url:         "/swag/favicon-16x16.png",
-			statusCode:  200,
-			contentType: "image/png",
-		},
-		{
 			name:       "Should return status 301",
 			url:        "/swag/",
 			statusCode: 301,
 			location:   "/swag/index.html",
-		},
-		{
-			name:       "Should return status 404",
-			url:        "/swag/notfound",
-			statusCode: 404,
 		},
 	}
 

@@ -9,7 +9,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/utils"
-	"github.com/swaggo/swag"
+	"github.com/swaggo/swag/v2"
 )
 
 const (
@@ -67,6 +67,7 @@ func New(config ...Config) fiber.Handler {
 		case defaultDocURL:
 			var doc string
 			if doc, err = swag.ReadDoc(cfg.InstanceName); err != nil {
+				fmt.Println(err)
 				return err
 			}
 			return c.Type("json").SendString(doc)
