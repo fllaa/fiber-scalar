@@ -1,9 +1,6 @@
 package scalar
 
 type Config struct {
-	// BT is the backtick character used to wrap the OpenAPI spec content
-	BT string `json:"-"` // Backtick
-
 	// This parameter can be used to name different instances of the Scalar API Reference
 	// default: ""
 	InstanceName string `json:"-"` // Name of the instance
@@ -39,7 +36,6 @@ type Config struct {
 
 var (
 	ConfigDefault = Config{
-		BT:       "`",
 		Title:    "API Reference",
 		ProxyURL: "https://proxy.scalar.com",
 		Layout:   "modern",
@@ -55,10 +51,6 @@ func configDefault(config ...Config) Config {
 
 	// Override default config
 	cfg := config[0]
-
-	if cfg.BT == "" {
-		cfg.BT = ConfigDefault.BT
-	}
 
 	if cfg.Title == "" {
 		cfg.Title = ConfigDefault.Title
