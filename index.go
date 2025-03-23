@@ -4,7 +4,7 @@ const indexTmpl string = `
 <!doctype html>
 <html>
   <head>
-    <title>Scalar API Reference</title>
+    <title>{{ .Title }}</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
