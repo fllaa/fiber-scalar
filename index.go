@@ -23,7 +23,7 @@ const indexTmpl string = `
         {{- if .ContentURL }}
         url: '{{ .ContentURL }}',
         {{- else }}
-        content: {{ .BT }}{{ .Content }}{{ .BT }},
+        content: {{ .Content }},
         {{- end }}
         proxyUrl: '{{ .ProxyURL }}',
         title: '{{ .Title }}',
