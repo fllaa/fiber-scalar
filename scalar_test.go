@@ -46,7 +46,9 @@ func TestScalar(t *testing.T) {
 		swag.Register(swag.Name, &mockedSwag{})
 	})
 
-	app.Get("/swag/*", HandlerDefault)
+	app.Get("/swag/*", New(Config{
+		Theme: "moon",
+	}))
 
 	tests := []struct {
 		name        string

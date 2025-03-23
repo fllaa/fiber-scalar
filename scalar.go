@@ -22,7 +22,14 @@ var HandlerDefault = New()
 func New(config ...Config) fiber.Handler {
 	cfg := configDefault(config...)
 
-	index, err := template.New("scalar_index.html").Parse(indexTmpl)
+	index := template.New("scalar_index.html")
+	index.Funcs(template.FuncMap{
+		"jsEscape": func(s string) template.HTML {
+			return template.HTML(strings.ReplaceAll(s, "'", "\\'"))
+		},
+	})
+
+	index, err := index.Parse(indexTmpl)
 	if err != nil {
 		panic(fmt.Errorf("fiber: scalar middleware error -> %w", err))
 	}
@@ -43,14 +50,9 @@ func New(config ...Config) fiber.Handler {
 					prefix = forwardedPrefix + prefix
 				}
 
-				// Set doc url
-				if len(cfg.URL) == 0 {
-					cfg.URL = path.Join(prefix, defaultDocURL)
-				}
-
-				// Set Spec
-				if len(cfg.Spec) == 0 {
-					cfg.Spec, err = swag.ReadDoc(cfg.InstanceName)
+				// Set Content
+				if len(cfg.Content) == 0 {
+					cfg.Content, err = swag.ReadDoc(cfg.InstanceName)
 					if err != nil {
 						return
 					}
