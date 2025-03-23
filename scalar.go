@@ -22,7 +22,14 @@ var HandlerDefault = New()
 func New(config ...Config) fiber.Handler {
 	cfg := configDefault(config...)
 
-	index, err := template.New("scalar_index.html").Parse(indexTmpl)
+	index := template.New("scalar_index.html")
+	index.Funcs(template.FuncMap{
+		"jsEscape": func(s string) template.HTML {
+			return template.HTML(strings.ReplaceAll(s, "'", "\\'"))
+		},
+	})
+
+	index, err := index.Parse(indexTmpl)
 	if err != nil {
 		panic(fmt.Errorf("fiber: scalar middleware error -> %w", err))
 	}
