@@ -43,14 +43,9 @@ func New(config ...Config) fiber.Handler {
 					prefix = forwardedPrefix + prefix
 				}
 
-				// Set doc url
-				if len(cfg.URL) == 0 {
-					cfg.URL = path.Join(prefix, defaultDocURL)
-				}
-
-				// Set Spec
-				if len(cfg.Spec) == 0 {
-					cfg.Spec, err = swag.ReadDoc(cfg.InstanceName)
+				// Set Content
+				if len(cfg.Content) == 0 {
+					cfg.Content, err = swag.ReadDoc(cfg.InstanceName)
 					if err != nil {
 						return
 					}
