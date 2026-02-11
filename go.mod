@@ -1,4 +1,4 @@
-module github.com/fllaa/fiber-scalar
+module github.com/fllaa/fiber-scalar/v3
 
 go 1.25.0
 
