@@ -7,8 +7,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/utils"
+	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/utils/v2"
 	"github.com/swaggo/swag/v2"
 )
 
@@ -32,7 +32,7 @@ func New(config ...Config) fiber.Handler {
 		once   sync.Once
 	)
 
-	return func(c *fiber.Ctx) error {
+	return func(c fiber.Ctx) error {
 		// Set prefix
 		once.Do(
 			func() {
@@ -67,12 +67,12 @@ func New(config ...Config) fiber.Handler {
 			}
 			return c.Type("json").SendString(doc)
 		default:
-			return c.Redirect(path.Join(prefix, defaultIndex), fiber.StatusMovedPermanently)
+			return c.Redirect().Status(fiber.StatusMovedPermanently).To(path.Join(prefix, defaultIndex))
 		}
 	}
 }
 
-func getForwardedPrefix(c *fiber.Ctx) string {
+func getForwardedPrefix(c fiber.Ctx) string {
 	header := c.GetReqHeaders()["X-Forwarded-Prefix"]
 
 	if len(header) == 0 {
